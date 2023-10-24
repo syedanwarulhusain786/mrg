@@ -1,0 +1,56 @@
+; saved on 2023.09.28 22:32:56
+; this file contains input parameters for testing/optimizing Unlock FX (instead of joeadams) expert advisor
+; to use it in the strategy tester, click Load in the context menu of the Inputs tab
+;
+; GENERAL
+MagicNumber=888||888||1||8880||N
+Comm=ea
+; SEQUENCE SETTINGS
+TradingDirection=1||0||0||2||N
+MaxOrder=3||1||1||200||N
+PipStep=20||10||10||100||Y
+PipStepExponent=1.2||1.0||.2||1.2||Y
+DelaySequence=0||0||1||3||Y
+; TAKE PROFIT  SETTINGS
+TakeProfit=0||5||2||10||N
+StopLoss=0||20.0||2.000000||200.000000||N
+LockProfit=5||5||10||50||Y
+LockSet=0||0||0||1||N
+TrailingStop=2.0||2||2||15||Y
+TrailingStopSet=0||0||0||1||N
+; LOT SIZE SETTINGS
+Lots=1||0.1||0.010000||1.000000||N
+LotsExponent=1.0||1||.5||3||Y
+MaxLots=100||10.0||1.000000||100.000000||N
+; RSI SETTINGS
+UseRSI=true||false||0||true||N
+RSITimeframe=15||5||0||16388||Y
+RSIPeriod=14||4||10||24||Y
+SellLevel=46||46||10||86||Y
+; EMA SETTINGS
+UseEMA=false||false||0||true||Y
+EMATimeframe=5||5||0||16388||Y
+EMA=3||0||0||4||Y
+EMATrendRule=2||0||0||2||N
+; ADX SETTINGS
+UseADX=false||false||0||true||Y
+ADXTimeframe=16385||5||0||16388||Y
+ADXPeriod=24||4||10||24||Y
+ADXBuyLevel=50||10||20||100||Y
+ADXSellLevel=10||10||20||100||Y
+ADXTrendRule=2||0||0||2||N
+; WEEKEND CLOSURE
+Closeweekend=false||false||0||true||N
+StopTradingOnFriday=true||false||0||true||N
+FridayEndTime=17:00
+StartTradingOnMonday=true||false||0||true||N
+MondayStarttime=02:00
+; HIGH IMPACT NEWS FILTER
+UseNewsStopTrading=true||false||0||true||N
+StopTradingBeforeNews=500||30||1||300||N
+ResumeTradingAfterNews=500||30||1||300||N
+impactstat=2||0||0||2||N
+newsClose=true||false||0||true||N
+Managesequence=false||false||0||true||N
+date_from=1689033600||1672531200||1||16725312000||N
+
