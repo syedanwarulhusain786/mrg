@@ -1,0 +1,192 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Registration</title>
+  <link rel="stylesheet" href="{% static '\login\login.css' %}"> 
+
+    <style>
+        body {
+            background-color: #333;
+            color: white;
+        }
+        form {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            background-color: #444;
+            color: white;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            border: none;
+            cursor: pointer;
+        }
+        .pmpro_asterisk {
+            color: #ff0000;
+        }
+        .pmpro_message {
+            background-color: #ffcc00;
+            color: #333;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="signin" style="width: 800px;"> 
+        <div class="content"> 
+        <form class="form" action="{% url 'CreateCheckoutSessionView' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" id="level" name="level" value="1">
+        <input type="hidden" id="checkjavascript" name="checkjavascript" value="1">
+
+        <div role="alert" id="pmpro_message" class="pmpro_message">
+            A Payment Gateway must be set up before any payments will be processed.
+        </div>
+
+        <div id="pmpro_pricing_fields" class="pmpro_checkout">
+            <h2>
+                <div class="pmpro_checkout-h2-name">Membership Level</div>
+            </h2>
+            <div class="pmpro_checkout-fields">
+                <p class="pmpro_level_name_text">
+                    You have selected the <strong>6 Months</strong> membership level.
+                </p>
+                <div class="pmpro_level_description_text">
+                    Unlock a world of exclusive benefits and premium access with our 6-Month Paid Membership. Dive into a six-month journey of unparalleled privileges, early access to new content, special discounts, and a vibrant community of like-minded individuals.
+                </div>
+                <div id="pmpro_level_cost">
+                    <div class="pmpro_level_cost_text">
+                        <p>The price for membership is <strong>$599.00 every 6 Months</strong>. </p>
+                    </div>
+                    <div class="pmpro_level_expiration_text">
+                        <p>Membership expires after 6 Months.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pmpro_user_fields" class="pmpro_checkout">
+            <hr>
+            <h2>
+                <div class="pmpro_checkout-h2-name">Account Information</div>
+                        <div class="pmpro_checkout-h2-msg">Already have an account? <a href="{% url 'login' %}">Log in here</a></div>
+            </h2>
+            <div class="pmpro_checkout-fields">
+                <div class="pmpro_checkout-field pmpro_checkout-field-username">
+                    <label for="username">Username</label>
+                    <input id="username" name="username" type="text" class="input pmpro_required" value="">
+                    <span class="pmpro_asterisk"> <abbr title="Required Field">*</abbr></span>
+                </div>
+                <div class="pmpro_checkout-field pmpro_checkout-field-password">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" class="input pmpro_required" value="">
+                    <span class="pmpro_asterisk"> <abbr title="Required Field">*</abbr></span>
+                </div>
+                <div class="pmpro_checkout-field pmpro_checkout-field-password2">
+                    <label for="password2">Confirm Password</label>
+                    <input id="password2" name="password2" type="password" class="input pmpro_required" value="">
+                    <span class="pmpro_asterisk"> <abbr title="Required Field">*</abbr></span>
+                </div>
+                <div class="pmpro_checkout-field pmpro_checkout-field-bemail">
+                    <label for="bemail">Email Address</label>
+                    <input id="bemail" name="bemail" type="email" class="input pmpro_required" value="">
+                    <span class="pmpro_asterisk"> <abbr title="Required Field">*</abbr></span>
+                </div>
+                <div class="pmpro_checkout-field pmpro_checkout-field-bconfirmemail">
+                    <label for="bconfirmemail">Confirm Email Address</label>
+                    <input id="bconfirmemail" name="bconfirmemail" type="email" class="input pmpro_required" value="">
+                    <span class="pmpro_asterisk"> <abbr title="Required Field">*</abbr></span>
+                </div>
+                <div class="pmpro_hidden">
+                    <label for="fullname">Full Name</label>
+                    <input id="fullname" name="fullname" type="text" class="input" autocomplete="off">
+                    <strong>LEAVE THIS BLANK</strong>
+                </div>
+            </div>
+        </div>
+
+        <div id="pmpro_billing_address_fields" class="pmpro_checkout">
+            <hr>
+            <h2>
+                <span class="pmpro_checkout-h2-name">Billing Address</span>
+            </h2>
+            <div class="pmpro_checkout-fields">
+                <div class="pmpro_checkout-field pmpro_checkout-field-bfirstname">
+                    <label for="bfirstname">First Name</label>
+                    <input id="bfirstname" name="bfirstname" type="text" class="input pmpro_required" value="">
+                    <span class="pmpro_asterisk"> <abbr title="Required Field">*</abbr></span>
+                </div>
+                <div class="pmpro_checkout-field pmpro_checkout-field-blastname">
+                    <label for="blastname">Last Name</label>
+                    <input id="blastname" name="blastname" type="text" class="input pmpro_required" value="">
+                    <span class="pmpro_asterisk"> <abbr title="Required Field">*</abbr></span>
+                </div>
+                <div class="pmpro_checkout-field pmpro_checkout-field-baddress1">
+                    <label for="baddress1">Address 1</label>
+                    <input id="baddress1" name="baddress1" type="text" class="input pmpro_required" value="">
+                    <span class="pmpro_asterisk"> <abbr title="Required Field">*</abbr></span>
+                </div>
+                <div class="pmpro_checkout-field pmpro_checkout-field-baddress2">
+                    <label for="baddress2">Address 2</label>
+                    <input id="baddress2" name="baddress2" type="text" class="input" value="">
+                </div>
+                <div class="pmpro_checkout-field pmpro_checkout-field-bcity">
+                    <label for= "bcity">City</label>
+                    <input id="bcity" name="bcity" type="text" class="input pmpro_required" value="">
+                    <span class="pmpro_asterisk"> <abbr title="Required Field">*</abbr></span>
+                </div>
+                <div class="pmpro_checkout-field pmpro_checkout-field-bstate">
+                    <label for= "bstate">State</label>
+                    <input id="bstate" name="bstate" type="text" class="input pmpro_required" value="">
+                    <span class="pmpro_asterisk"> <abbr title="Required Field">*</abbr></span>
+                </div>
+                <div class="pmpro_checkout-field pmpro_checkout-field-bzipcode">
+                    <label for= "bzipcode">Zip Code</label>
+                    <input id="bzipcode" name="bzipcode" type="text" class="input pmpro_required" value="">
+                    <span class="pmpro_asterisk"> <abbr title="Required Field">*</abbr></span>
+                </div>
+                <div class="pmpro_checkout-field pmpro_checkout-field-bcountry">
+                    <label for= "bcountry">Country</label>
+                    <select id="bcountry" name="bcountry" class="input pmpro_required">
+                        <option value="">-- Select --</option>
+                        <option value="US">United States</option>
+                        <option value="CA">Canada</option>
+                        <option value="GB">United Kingdom</option>
+                        <!-- Add more countries as needed -->
+                    </select>
+                    <span class="pmpro_asterisk"> <abbr title="Required Field">*</abbr></span>
+                </div>
+                <div class="pmpro_checkout-field pmpro_checkout-field-bphone">
+                    <label for= "bphone">Phone</label>
+                    <input id="bphone" name="bphone" type="text" class="input pmpro_required" value="">
+                </div>
+            </div>
+        </div>
+
+
+
+        <button type="submit" id="checkout-button" class="btn btn-primary">Checkout</button>
+            </form>
+        </div>
+    </div> 
+
+</html>
+

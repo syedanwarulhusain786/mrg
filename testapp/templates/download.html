@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  /* Add your CSS styles here */
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .card {
+    width: calc(30% - 20px);
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color: #fff;
+  }
+
+  .card img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .download-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+</style>
+
+<div class="container">
+  <!-- First Card -->
+  {% for file in files %}
+  <div class="card">
+    <img src="{% static 'first\img\download.png' %}" alt="Image 1">
+    <h2>{{ file.title }}</h2>
+    <a href="{{ file.file.url }}" class="download-button">Download</a>
+  </div>
+  {% endfor %}
+
+  
+  
+  <!-- Repeat the above card structure for more cards -->
+</div>
+  {% endblock %}

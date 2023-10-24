@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<header>
+    <h1>Frequently Asked Questions</h1>
+</header>
+<main>
+    <section class="faq-category">
+        <h2>General Questions</h2>
+        {% for Faq in Faqs %}
+        <div class="faq-item">
+              
+            <h3>{{Faq.question}}</h3>
+            <p>{{Faq.answer}}</p>
+        </div>
+          {% endfor %}
+
+        <!-- Add more questions and answers as needed -->
+    </section>
+    
+    <!-- You can add more FAQ sections for Orders and Payments, Returns and Refunds, etc. -->
+    
+</main>
+<footer>
+    <p>&copy; 2023 UNLOCK EA</p>
+</footer>
+
+{% endblock %}

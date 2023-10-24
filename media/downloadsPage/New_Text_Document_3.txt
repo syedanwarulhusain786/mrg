@@ -1,0 +1,137 @@
+function processData() {
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  var commaDataSheet = spreadsheet.getSheetByName("Comma_Data");
+  var commaNamesSheet = spreadsheet.getSheetByName("Comma_Names");
+  var commaProdSheet = spreadsheet.getSheetByName("Comma_Prod");
+
+  var data = commaDataSheet.getDataRange().getValues();
+
+  var commaNamesData = [];
+  var commaProdData = [];
+  var poGroups = {}; // To group data by PO#
+  var temp = []
+  var data_to_write = [];
+
+  // Loop through the data and process it
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    var badgeNames = row[7]; // Assuming Badge Names are in column H
+    var article = row[4];    // Assuming Article is in column E
+    var poNumber = row[0];   // Assuming PO# is in column A
+    var c_sharp = row[6];   // Assuming PO# is in column A
+    var site_name = row[9];   // Assuming PO# is in column A
+
+
+    // Process Badge Names (Column H)
+    var badgeNamesArray = badgeNames.split(',').map(function (name) {
+      return toProperCase(name.trim());
+    });
+
+    for (var j = 1; j < badgeNamesArray.length + 1; j++) {
+
+      // Process Article (Column E)
+      var names = badgeNamesArray[j]
+      var codes = convertArticleToUpperCase(article)
+      if (!temp.includes(names) && names !== undefined && names !== null && names !== "" && names !== "undefined") {
+        commaNamesData.push([names, codes]);
+        if (codes=="P"){
+          var p=badgeNamesArray.length
+          var m=0
+          var c= 0
+        } else if (codes == "M"){
+          var p=0
+          var m=badgeNamesArray.length
+          var c= 0
+        } else {
+          var p=0
+          var m=0
+          var c= badgeNamesArray.length
+        }
+        temp.push(names);
+        Logger.log(names+p+','+m+','+c+',',p+m+c)
+      } else {
+
+      }
+      if (poGroups.hasOwnProperty(poNumber.toString())) {
+        poGroups[poNumber.toString() + "_" + '2'] = {
+          'po': poNumber.toString(),
+          'Badge_Names': badgeNamesArray,
+          'c_sharp': c_sharp.toString(), names: badgeNamesArray.length.toString(), 'article': article.toString(),
+          'site_name': site_name, 'codes': codes , 'p':p,'m':m,'c':c,'sum':p+m+c
+        }
+
+
+
+        
+      } else {
+        poGroups[poNumber.toString()] = {
+          'po': poNumber.toString(),
+          'Badge_Names': badgeNamesArray,
+          'c_sharp': c_sharp.toString(), names: badgeNamesArray.length.toString(), 'article': article.toString(),
+          'site_name': site_name, 'codes': codes, 'p':p,'m':m,'c':c,'sum':p+m+c
+        }
+      }
+    }
+
+
+
+
+
+
+
+    // Convert the dictionary into an array of arrays
+
+
+
+
+
+
+  }
+  Logger.log(poGroups)
+    for (var key in poGroups) {
+      if (poGroups.hasOwnProperty(key + '_' + '2')) {
+        if (poGroups[key].codes == 'P') {
+          data_to_write.push([poGroups[key].po.toString(), "", poGroups[key]['Badge_Names'][0] + "-" + poGroups[key + '_' + '2']['Badge_Names'][poGroups[key + '_' + '2']['Badge_Names'].length-1], poGroups[key].c_sharp, poGroups[key].names, 0, 0, poGroups[key].sum+poGroups[key + '_' + '2'].sum]);
+        } else if (poGroups[key].codes == 'M') {
+          data_to_write.push([poGroups[key].po.toString(), "", poGroups[key]['Badge_Names'][0] + "-" + poGroups[key + '_' + '2']['Badge_Names'][poGroups[key + '_' + '2']['Badge_Names'].length-1], poGroups[key].c_sharp, 0, poGroups[key].names, 0, poGroups[key].sum+poGroups[key + '_' + '2'].sum]);
+        } else {
+          data_to_write.push([poGroups[key].po.toString(), "", poGroups[key]['Badge_Names'][0] + "-" + poGroups[key + '_' + '2']['Badge_Names'][poGroups[key + '_' + '2']['Badge_Names'].length-1], poGroups[key].c_sharp, 0, 0, poGroups[key].names, poGroups[key].sum+poGroups[key + '_' + '2'].sum]);
+        }
+        delete poGroups[key];
+        delete poGroups[key + '_' + '2'];
+      } else {
+        if (poGroups[key].codes == 'P') {
+          data_to_write.push([poGroups[key].po.toString(), "", poGroups[key]['Badge_Names'][0] + "-" + poGroups[key]['Badge_Names'][poGroups[key]['Badge_Names'].length-1], poGroups[key].c_sharp, poGroups[key].names, 0, 0, poGroups[key].names]);
+        } else if (poGroups[key].codes == 'M') {
+          data_to_write.push([poGroups[key].po.toString(), "", poGroups[key]['Badge_Names'][0] + "-" + poGroups[key]['Badge_Names'][poGroups[key]['Badge_Names'].length-1], poGroups[key].c_sharp, 0, poGroups[key].names, 0, poGroups[key].names]);
+        } else {
+          data_to_write.push([poGroups[key].po.toString(), "", poGroups[key]['Badge_Names'][0] + "-" + poGroups[key]['Badge_Names'][poGroups[key]['Badge_Names'].length-1], poGroups[key].c_sharp, 0, 0, poGroups[key].names, poGroups[key].names]);
+        }
+
+      }
+      delete poGroups[key];
+    }
+    Logger.log(data_to_write)
+
+}
+
+
+
+function toProperCase(str) {
+  return str.toLowerCase().replace(/\b\w/g, function (l) {
+    return l.toUpperCase();
+  });
+}
+
+function convertArticleToUpperCase(article) {
+  // Define your mapping logic for Article codes to uppercase values here
+  // Example mapping: 323526 = P, 323525 = M, 323524 = C
+  var codeMapping = {
+    '323526': 'P',
+    '323525': 'M',
+    '323524': 'C'
+  };
+
+  return codeMapping[article] || '';
+}
+

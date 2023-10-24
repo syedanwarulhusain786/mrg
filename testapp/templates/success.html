@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Thanks for your order!</title>
+  <link href="{% static '\login\payment.css' %}" rel="stylesheet">
+</head>
+<body>
+  <section>
+    {% if payment_status == 'success' %}
+    <div class="payment-container success">
+      <div class="payment-card">
+          <h2>Payment Successful</h2>
+          <p>Thank you for your purchase!</p>
+          <img src="{% static 'first\img\checkmark.png' %}" alt="Success Icon">
+      </div>
+  </div>
+    {% else %}
+    <div class="payment-container failure">
+      <div class="payment-card">
+          <h2>Payment Failed</h2>
+          <p>Sorry, there was an issue with your payment.</p>
+          <img src="{% static 'first\img\failed.png' %}" alt="Failure Icon">
+      </div>
+  </div>
+    {% endif %}
+
+  </section>
+</body>
+</html>
